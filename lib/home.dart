@@ -9,6 +9,7 @@ import 'package:ott/widgets/tvshows.dart';
 import 'package:ott/widgets/upcoming.dart';
 import 'package:ott/widgets/videos.dart';
 import 'package:ott/widgets/videos.dart';
+import 'package:ott/widgets/years.dart';
 
 import 'package:tmdb_api/tmdb_api.dart';
 
@@ -107,7 +108,8 @@ class _HomeState extends State<Home> {
                       children: [
                         Text(
                           "over",
-                          style: TextStyle(letterSpacing: 6),
+                          style:
+                              TextStyle(letterSpacing: 6, color: Colors.white),
                         ),
                         Text(
                           "THE",
@@ -116,6 +118,7 @@ class _HomeState extends State<Home> {
                         Text(
                           "TOP",
                           style: TextStyle(
+                            color: Colors.white,
                             letterSpacing: 6,
                           ),
                         ),
@@ -166,6 +169,27 @@ class _HomeState extends State<Home> {
               //     );
               //   },
               // ),
+              ListTile(
+                hoverColor: Color.fromARGB(255, 43, 43, 43),
+                // selectedTileColor: Colors.red,
+                selected: true,
+                title: Text(
+                  'Years',
+                  style: TextStyle(
+                    fontSize: 10.sp,
+                    color: Colors.white,
+                  ),
+                ),
+                leading: Icon(
+                  Icons.youtube_searched_for_sharp,
+                  color: Colors.red,
+                ),
+                onTap: () {
+                  // Navigator.pushNamed(context, Navigator().years);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Years()));
+                },
+              ),
               mytiles("Favourites", Icons.heart_broken, ""),
               mytiles("Subscriptions", Icons.subscriptions, ""),
               mytiles("Updates", Icons.update, ""),
@@ -224,7 +248,7 @@ class _HomeState extends State<Home> {
 
   Widget mytiles(title, icon, routename) {
     return ListTile(
-      hoverColor: Color.fromARGB(255, 65, 3, 3),
+      hoverColor: Color.fromARGB(255, 43, 43, 43),
       // selectedTileColor: Colors.red,
       selected: true,
       title: Text(

@@ -333,7 +333,8 @@ class tvshowsdetails extends StatelessWidget {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Popularity",

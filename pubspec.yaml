@@ -51,6 +51,7 @@ dev_dependencies:
   tmdb_api:
   google_fonts:
   video_player: ^2.5.2
+  lottie: ^2.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

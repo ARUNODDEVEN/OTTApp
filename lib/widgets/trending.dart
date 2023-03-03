@@ -69,8 +69,8 @@ class TrendingMovies extends StatelessWidget {
                         Center(
                           child: ModifiedText(
                               // ignore: prefer_if_null_operators
-                              text: Trending[index]['title'] != null
-                                  ? Trending[index]['title'].toString()
+                              text: Trending[index]['original_title'] != null
+                                  ? Trending[index]['original_title'].toString()
                                   : 'loading....',
                               coloor: Colors.white,
                               size: 9.sp),
@@ -332,7 +332,8 @@ class TrendingInfo extends StatelessWidget {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Popularity",
@@ -372,3 +373,12 @@ class TrendingInfo extends StatelessWidget {
     );
   }
 }
+
+// extension padding on num {
+//   SizedBox get ph => SizedBox(
+//         height: toDouble(),
+//       );
+//   SizedBox get pw => SizedBox(
+//         width: toDouble(),
+//       );
+// }

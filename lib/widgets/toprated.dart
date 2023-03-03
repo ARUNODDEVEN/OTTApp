@@ -64,13 +64,15 @@ class topratedMovies extends StatelessWidget {
                                           toprated[index]['poster_path']))),
                         ),
                         Center(
-                          child: ModifiedText(
+                          child:
                               // ignore: prefer_if_null_operators
-                              text: toprated[index]['original_title'] != null
-                                  ? toprated[index]['original_title'].toString()
-                                  : 'loading',
-                              coloor: Colors.white,
-                              size: 9.sp),
+                              Text(
+                            toprated[index]['original_title'] != null
+                                ? toprated[index]['original_title'].toString()
+                                : 'loading',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 9.sp),
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -174,10 +176,14 @@ class Topratedinfo extends StatelessWidget {
                           height: 10.h,
                         ),
                         Text(
-                          topratedinfo[index_of_trending]['name'] != null
-                              ? topratedinfo[index_of_trending]['name']
+                          topratedinfo[index_of_trending]['original_title'] !=
+                                  null
+                              ? topratedinfo[index_of_trending]
+                                  ['original_title']
                               : ".........",
-                          style: TextStyle(fontSize: 13.sp),
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                          ),
                         ),
                         SizedBox(
                           height: 5.h,
@@ -344,8 +350,9 @@ class Topratedinfo extends StatelessWidget {
                               FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  topratedinfo[index]['name'] != null
-                                      ? topratedinfo[index]['name'].toString()
+                                  topratedinfo[index]['original_title'] != null
+                                      ? topratedinfo[index]['original_title']
+                                          .toString()
                                       : 'loading',
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
@@ -354,7 +361,8 @@ class Topratedinfo extends StatelessWidget {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Popularity",
