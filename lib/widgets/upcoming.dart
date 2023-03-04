@@ -8,6 +8,7 @@ class Upcomingmovies extends StatelessWidget {
   });
 
   List<dynamic> upcoming = [];
+  bool movieselected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +18,20 @@ class Upcomingmovies extends StatelessWidget {
           return ListView(
             scrollDirection: Axis.horizontal,
             children: [
-              Container(
-                  height: 250.h,
-                  width: 300.w,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: NetworkImage('http://image.tmdb.org/t/p/w500' +
-                              upcoming[index]['poster_path'])))),
+              InkWell(
+                onHover: (value) {
+                  movieselected = !movieselected;
+                },
+                hoverColor: Colors.red.withOpacity(0.5),
+                child: Container(
+                    height: 250.h,
+                    width: 300.w,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage(
+                                'http://image.tmdb.org/t/p/w500' +
+                                    upcoming[index]['poster_path'])))),
+              ),
             ],
           );
         });

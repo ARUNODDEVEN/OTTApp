@@ -10,6 +10,7 @@ import 'package:ott/widgets/upcoming.dart';
 import 'package:ott/widgets/videos.dart';
 import 'package:ott/widgets/videos.dart';
 import 'package:ott/widgets/years.dart';
+import 'package:connectivity/connectivity.dart';
 
 import 'package:tmdb_api/tmdb_api.dart';
 
@@ -21,6 +22,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool _isconnected = true;
   //first i make three lists then i will fetch data from api so that i can store that data in in this list
   List trendingmovies = [];
   List topratedmovies = [];
@@ -41,6 +43,11 @@ class _HomeState extends State<Home> {
 ///////////////////////////////////////////////
   @override
   void initState() {
+    Connectivity().onConnectivityChanged.listen((result) {
+      setState(() {
+        _isconnected = result != ConnectivityResult.none;
+      });
+    });
     loadmovies();
     // this is load movies function which is i am using to load the data from the api
 
@@ -55,7 +62,7 @@ class _HomeState extends State<Home> {
 
     Map trendingresult = await tmdbwithCustomlogs.v3.trending.getTrending();
     Map discoverresults =
-        await tmdbwithCustomlogs.v3.search.queryMovies('2023');
+        await tmdbwithCustomlogs.v3.search.queryMovies('2022');
     Map topratedresults = await tmdbwithCustomlogs.v3.movies.getTopRated();
     Map populartvresults = await tmdbwithCustomlogs.v3.tv.getTopRated();
     Map upcomingmoviesresults =
@@ -92,24 +99,130 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        drawer: Drawer(
-          child: Column(
-            children: [
-              DrawerHeader(
-                child: Column(
-                  children: [
-                    Icon(
-                      Icons.catching_pokemon_sharp,
-                      color: Colors.red,
-                      size: 50.sp,
-                    ),
-                    Wrap(
+        child: _isconnected
+            ? Scaffold(
+                drawer: Drawer(
+                  child: Column(
+                    children: [
+                      DrawerHeader(
+                        child: Column(
+                          children: [
+                            Icon(
+                              Icons.catching_pokemon_sharp,
+                              color: Colors.red,
+                              size: 50.sp,
+                            ),
+                            Wrap(
+                              children: [
+                                Text(
+                                  "over",
+                                  style: TextStyle(
+                                      letterSpacing: 6, color: Colors.white),
+                                ),
+                                Text(
+                                  "THE",
+                                  style: TextStyle(
+                                      letterSpacing: 6, color: Colors.red),
+                                ),
+                                Text(
+                                  "TOP",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    letterSpacing: 6,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                            Divider(
+                              color: Colors.red,
+                              height: 5.h,
+                            )
+                          ],
+                        ),
+                      ),
+                      mytiles("Home", Icons.home, ""),
+                      mytiles("Trending", Icons.trending_up_rounded, ""),
+                      // ListTile(
+                      //   hoverColor: Color.fromARGB(255, 65, 3, 3),
+                      //   // selectedTileColor: Colors.red,
+                      //   selected: true,
+                      //   title: Text(
+                      //     "Selectbyyears",
+                      //     style: TextStyle(
+                      //       fontSize: 10.sp,
+                      //       color: Colors.white,
+                      //     ),
+                      //   ),
+                      //   leading: Icon(
+                      //     Icons.category,
+                      //     color: Colors.red,
+                      //   ),
+                      //   onTap: () {
+                      //     // DropdownButton(items: items, onChanged: onChanged)
+                      //     DropdownButton<String>(
+                      //       value: selectedYear,
+                      //       onChanged: (String? newValue) {
+                      //         setState(() {
+                      //           selectedYear = newValue!;
+                      //         });
+                      //       },
+                      //       items: years.map<DropdownMenuItem<String>>((String value) {
+                      //         return DropdownMenuItem<String>(
+                      //           value: value,
+                      //           child: Container(child: ListTile()),
+                      //         );
+                      //       }).toList(),
+                      //     );
+                      //   },
+                      // ),
+                      ListTile(
+                        hoverColor: Color.fromARGB(255, 43, 43, 43),
+                        // selectedTileColor: Colors.red,
+                        selected: true,
+                        title: Text(
+                          'Years',
+                          style: TextStyle(
+                            fontSize: 10.sp,
+                            color: Colors.white,
+                          ),
+                        ),
+                        leading: Icon(
+                          Icons.youtube_searched_for_sharp,
+                          color: Colors.red,
+                        ),
+                        onTap: () {
+                          // Navigator.pushNamed(context, Navigator().years);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => Years()));
+                        },
+                      ),
+                      mytiles("Favourites", Icons.heart_broken, ""),
+                      mytiles("Subscriptions", Icons.subscriptions, ""),
+                      mytiles("Updates", Icons.update, ""),
+                      mytiles("Contact Us", Icons.call, ""),
+                    ],
+                  ),
+
+                  backgroundColor: Colors.black,
+                  // elevation: 0,
+                  shadowColor: Colors.red,
+                  // elevation: 1,
+
+                  // surfaceTintColor: Colors.white,
+                  width: 160.w,
+                ),
+                appBar: AppBar(
+                    // leading: IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
+                    backgroundColor: Colors.black,
+                    centerTitle: true,
+                    title: Wrap(
                       children: [
                         Text(
                           "over",
-                          style:
-                              TextStyle(letterSpacing: 6, color: Colors.white),
+                          style: TextStyle(letterSpacing: 6),
                         ),
                         Text(
                           "THE",
@@ -118,132 +231,37 @@ class _HomeState extends State<Home> {
                         Text(
                           "TOP",
                           style: TextStyle(
-                            color: Colors.white,
                             letterSpacing: 6,
                           ),
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 40.h,
-                    ),
-                    Divider(
-                      color: Colors.red,
-                      height: 5.h,
-                    )
-                  ],
-                ),
-              ),
-              mytiles("Home", Icons.home, ""),
-              mytiles("Trending", Icons.trending_up_rounded, ""),
-              // ListTile(
-              //   hoverColor: Color.fromARGB(255, 65, 3, 3),
-              //   // selectedTileColor: Colors.red,
-              //   selected: true,
-              //   title: Text(
-              //     "Selectbyyears",
-              //     style: TextStyle(
-              //       fontSize: 10.sp,
-              //       color: Colors.white,
-              //     ),
-              //   ),
-              //   leading: Icon(
-              //     Icons.category,
-              //     color: Colors.red,
-              //   ),
-              //   onTap: () {
-              //     // DropdownButton(items: items, onChanged: onChanged)
-              //     DropdownButton<String>(
-              //       value: selectedYear,
-              //       onChanged: (String? newValue) {
-              //         setState(() {
-              //           selectedYear = newValue!;
-              //         });
-              //       },
-              //       items: years.map<DropdownMenuItem<String>>((String value) {
-              //         return DropdownMenuItem<String>(
-              //           value: value,
-              //           child: Container(child: ListTile()),
-              //         );
-              //       }).toList(),
-              //     );
-              //   },
-              // ),
-              ListTile(
-                hoverColor: Color.fromARGB(255, 43, 43, 43),
-                // selectedTileColor: Colors.red,
-                selected: true,
-                title: Text(
-                  'Years',
-                  style: TextStyle(
-                    fontSize: 10.sp,
-                    color: Colors.white,
-                  ),
-                ),
-                leading: Icon(
-                  Icons.youtube_searched_for_sharp,
+                    )),
+                body: RefreshIndicator(
                   color: Colors.red,
-                ),
-                onTap: () {
-                  // Navigator.pushNamed(context, Navigator().years);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Years()));
-                },
-              ),
-              mytiles("Favourites", Icons.heart_broken, ""),
-              mytiles("Subscriptions", Icons.subscriptions, ""),
-              mytiles("Updates", Icons.update, ""),
-              mytiles("Contact Us", Icons.call, ""),
-            ],
-          ),
-
-          backgroundColor: Colors.black,
-          // elevation: 0,
-          shadowColor: Colors.red,
-          // elevation: 1,
-
-          // surfaceTintColor: Colors.white,
-          width: 160.w,
-        ),
-        appBar: AppBar(
-            backgroundColor: Colors.black,
-            centerTitle: true,
-            title: Wrap(
-              children: [
-                Text(
-                  "over",
-                  style: TextStyle(letterSpacing: 6),
-                ),
-                Text(
-                  "THE",
-                  style: TextStyle(letterSpacing: 6, color: Colors.red),
-                ),
-                Text(
-                  "TOP",
-                  style: TextStyle(
-                    letterSpacing: 6,
+                  onRefresh: _handleRefresh,
+                  child: ListView(
+                    children: [
+                      // VideoApp(),
+                      // Posterssss(p: photos),
+                      TrendingMovies(Trending: trendingmovies),
+                      topratedMovies(toprated: topratedmovies),
+                      tv(tvshow: populartvshows)
+                      // Upcomingmovies(upcoming: upcomingmovies)
+                      // topratedMovies(toprated: topratedmovies,
+                    ],
                   ),
                 ),
-              ],
-            )),
-        body: RefreshIndicator(
-          color: Colors.red,
-          onRefresh: _handleRefresh,
-          child: ListView(
-            children: [
-              // VideoApp(),
-              // Posterssss(p: photos),
-              TrendingMovies(Trending: trendingmovies),
-              topratedMovies(toprated: topratedmovies),
-              tv(tvshow: populartvshows)
-              // Upcomingmovies(upcoming: upcomingmovies)
-              // topratedMovies(toprated: topratedmovies,
-            ],
-          ),
-        ),
-        // ),
-      ),
-    );
+                // ),
+              )
+            : Scaffold(
+                backgroundColor: Colors.black,
+                body: Center(
+                  child: Text(
+                    "No internet connection is available",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
+              ));
   }
 
   Widget mytiles(title, icon, routename) {

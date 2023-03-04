@@ -12,6 +12,7 @@ class topratedMovies extends StatelessWidget {
 
   // final Map<dynamic> toprated;
   final List<dynamic> toprated;
+  bool hover = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +50,11 @@ class topratedMovies extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return InkWell(
+                  // radius: 10.0,
+                  // hoverColor: Colors.black,
+                  // onHover: (value) {
+                  //   hover = !hover;
+                  // },
                   child: Container(
                     padding: EdgeInsets.all(10),
                     width: 140.w,

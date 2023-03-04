@@ -2,10 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ott/home.dart';
 
-class Years extends StatelessWidget {
+class Years extends StatefulWidget {
   Years({super.key});
+
+  @override
+  State<Years> createState() => _YearsState();
+}
+
+class _YearsState extends State<Years> {
+  bool focus = false;
   List y = [
+    1990,  
+    1991,
+    1992,
+    1993,
+    1994,
+    1995,
+    1996,
+    1997,
+    1998,
+    1999,
     2000,
     2001,
     2002,
@@ -52,6 +70,7 @@ class Years extends StatelessWidget {
     //   ),
     // );
     return Scaffold(
+
         // backgroundColor: Colors.b,
         backgroundColor: Colors.black,
         body: GridView.builder(
@@ -60,7 +79,17 @@ class Years extends StatelessWidget {
                 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
             itemBuilder: (context, index) {
               return InkWell(
-                
+                onHover: (value) {
+                  focus = !focus;
+                },
+                borderRadius: BorderRadius.circular(20),
+                hoverColor: Colors.red.withOpacity(0.5),
+                // focusColor: Colors.red,
+                splashColor: Color.fromARGB(255, 113, 8, 1),
+                onTap: () {
+                  var a = y[index].toString();
+                  print(a);
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
